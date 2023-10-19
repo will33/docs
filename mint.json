@@ -53,24 +53,55 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
-    },
-    {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
-    },
-    {
-      "group": "Endpoint Examples",
+      "group": "Vehicles",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "api-reference/vehicles/vehicles",
+        "api-reference/vehicles/vehicle"
+      ]
+    },
+    {
+      "group": "Location",
+      "pages": [
+        "api-reference/location/vehicle-location"
+      ]
+    },
+    {
+      "group": "Reports",
+      "pages": [
+        "api-reference/reports/activity-summary-report",
+        "api-reference/reports/idling-summary-report",
+        "api-reference/reports/off-road-summary",
+        "api-reference/reports/location-summary-report"
+      ]
+    },
+    {
+      "group": "History",
+      "pages": [
+        "api-reference/history/vehicle-location-history",
+        "api-reference/history/trips"
+      ]
+    },
+    {
+      "group": "Providers",
+      "pages": [
+        "api-reference/providers/providers",
+        "api-reference/providers/provider"
+      ]
+    },
+    {
+      "group": "Accounts",
+      "pages": [
+        "api-reference/accounts/accounts",
+        "api-reference/accounts/account"
+      ]
+    },
+    {
+      "group": "Boundaries",
+      "pages": [
+        "api-reference/boundaries/get-boundaries",
+        "api-reference/boundaries/create-boundary",
+        "api-reference/boundaries/get-boundary",
+        "api-reference/boundaries/delete-boundary"
       ]
     }
   ],
@@ -78,5 +109,6 @@
     "twitter": "https://twitter.com/mintlify",
     "github": "https://github.com/mintlify",
     "linkedin": "https://www.linkedin.com/company/mintsearch"
-  }
+  },
+  "openapi": ["/openapi.json"]
 }
