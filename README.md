@@ -22,6 +22,8 @@ Run the following command at the root of your documentation (where mint.json is)
 mintlify dev
 ```
 
+To auto-generate API reference, follow this [guide](https://mintlify.com/docs/api-playground/openapi/setup)
+
 ### Publishing Changes
 
 Install our Github App to autopropagate changes from youre repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
