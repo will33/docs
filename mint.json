@@ -38,23 +38,35 @@
     },
     {
       "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
+      "pages": [
+        "essentials/markdown",
+        "essentials/code",
+        "essentials/images",
+        "essentials/settings",
+        "essentials/navigation"
+      ]
     },
     {
       "group": "API Documentation",
       "pages": ["api-reference"]
     },
     {
-      "group": "Vehicles",
-      "pages": [
-        "api-reference/vehicles/vehicles",
-        "api-reference/vehicles/vehicle"
-      ]
+      "group": "Devices",
+      "pages": ["api-reference/devices/devices", "api-reference/devices/vehicle"]
     },
     {
-      "group": "Location",
+      "group": "Positions",
+      "pages": ["api-reference/positions/positions"]
+    },
+    {
+      "group": "Trips",
+      "pages": ["api-reference/trips/trips", "api-reference/trips/trips-for-device"]
+    },
+    {
+      "group": "Real-Time Location",
       "pages": [
-        "api-reference/location/vehicle-location"
+        "api-reference/real-time-location/real-time-locations",
+        "api-reference/real-time-location/real-time-location-for-device"
       ]
     },
     {
@@ -67,25 +79,12 @@
       ]
     },
     {
-      "group": "History",
-      "pages": [
-        "api-reference/history/vehicle-location-history",
-        "api-reference/history/trips"
-      ]
-    },
-    {
       "group": "Providers",
-      "pages": [
-        "api-reference/providers/providers",
-        "api-reference/providers/provider"
-      ]
+      "pages": ["api-reference/providers/providers", "api-reference/providers/provider"]
     },
     {
       "group": "Accounts",
-      "pages": [
-        "api-reference/accounts/accounts",
-        "api-reference/accounts/account"
-      ]
+      "pages": ["api-reference/accounts/accounts", "api-reference/accounts/account"]
     },
     {
       "group": "Boundaries",
