@@ -47,10 +47,6 @@
       ]
     },
     {
-      "group": "API Documentation",
-      "pages": ["api-reference"]
-    },
-    {
       "group": "Devices",
       "pages": [
         "api-reference/devices/devices",
@@ -110,5 +106,11 @@
       ]
     }
   ],
-  "openapi": ["/openapi.json"]
+  "openapi": ["/openapi.json"],
+  "api": {
+    "auth": {
+        "method": "key",
+        "name": "my-api-key"
+    }
+  }
 }
