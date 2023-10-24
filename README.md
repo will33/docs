@@ -23,6 +23,8 @@ mintlify dev
 ```
 
 To auto-generate API reference, follow this [guide](https://mintlify.com/docs/api-playground/openapi/setup)
+Run `npx @mintlify/scraping@latest openapi-file openapi.json -o api-reference` and copy the generated links to the
+navigation in mint.json
 
 ### Publishing Changes
 
