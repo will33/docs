@@ -1,41 +1,76 @@
 {
   "openapi": "3.1.0",
-  "info": { "title": "FastAPI", "version": "0.1.0" },
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
   "paths": {
     "/token": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login",
         "operationId": "login_token_post",
         "requestBody": {
           "content": {
-            "application/x-www-form-urlencoded": { "schema": { "$ref": "#/components/schemas/Body_login_token_post" } }
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_login_token_post"
+              }
+            }
           },
           "required": true
         },
         "responses": {
-          "200": { "description": "Successful Response", "content": { "application/json": { "schema": {} } } },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/device": {
       "get": {
-        "tags": ["Devices"],
+        "tags": [
+          "Devices"
+        ],
         "summary": "Devices",
         "description": "This endpoint returns all the devices that an account has access to.\nThere are certain enhancements that can be done to the response by tweaking the request query parameters",
         "operationId": "devices_device_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "telematics_provider",
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Telematics Provider",
               "description": "Name of the telematics, use this if you want to filter the results to a certain telematics provider"
             },
@@ -46,7 +81,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -55,28 +94,50 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Success_List_Vehicle__" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_List_Vehicle__"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/device/{device_id}": {
       "get": {
-        "tags": ["Devices"],
+        "tags": [
+          "Devices"
+        ],
         "summary": "Device By Id",
         "description": "This endpoint returns a vehicle that an account has access to using the midland vehicle id.\nThere are certain enhancements that can be done to the response by tweaking the request query parameters",
         "operationId": "device_by_id_device__device_id__get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "device_id",
@@ -94,7 +155,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -103,28 +168,50 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Success_Device_" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_Device_"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/position/{device_id}": {
       "get": {
-        "tags": ["Positions"],
+        "tags": [
+          "Positions"
+        ],
         "summary": "Positions",
         "description": "This endpoint returns the historical point information for a given Device between start_time_utc and end_time_utc.\nIf start_time_utc or end_time_utc are not given, return the latest 1000 positions for a device.",
         "operationId": "positions_position__device_id__get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "device_id",
@@ -142,7 +229,15 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Start time",
               "description": "Start time from when the data will be returned"
             },
@@ -153,7 +248,15 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "End time",
               "description": "End time from when the data will be returned"
             },
@@ -176,7 +279,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeGeoEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -185,37 +292,65 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Success_List_VehiclePointData__" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_List_VehiclePointData__"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/trip": {
       "get": {
-        "tags": ["Trips"],
+        "tags": [
+          "Trips"
+        ],
         "summary": "Trips",
         "description": "Get Trip information for a specified period of time. If the start_time_utc or end_time_utc is not given, return\nthe last 100 trips.",
         "operationId": "trips_trip_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "start_time_utc",
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Start time",
               "description": "Start time from when the data will be returned"
             },
@@ -226,7 +361,15 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "End time",
               "description": "End time from when the data will be returned"
             },
@@ -237,7 +380,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeGeoEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -246,30 +393,50 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Success_List_TripInformation__" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_List_TripInformation__"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/trip/{device_id}": {
       "get": {
-        "tags": ["Trips"],
+        "tags": [
+          "Trips"
+        ],
         "summary": "Trips For Device",
         "description": "Get Trip information for a specified period of time for a given Device. If the start_time_utc or end_time_utc is not\ngiven, return the last 100 trips for that Device.",
         "operationId": "trips_for_device_trip__device_id__get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "device_id",
@@ -287,7 +454,15 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Start time",
               "description": "Start time from when the data will be returned"
             },
@@ -298,7 +473,15 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "End time",
               "description": "End time from when the data will be returned"
             },
@@ -309,7 +492,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeGeoEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -318,37 +505,61 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Success_List_TripInformation__" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_List_TripInformation__"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/location": {
       "get": {
-        "tags": ["Real-Time Location"],
+        "tags": [
+          "Real-Time Location"
+        ],
         "summary": "Real Time Locations",
         "description": "This endpoint returns a real time location for all devices.",
         "operationId": "real_time_locations_location_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "accept",
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeGeoEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -357,7 +568,11 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
@@ -373,18 +588,30 @@
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/location/{vehicle_id}": {
       "get": {
-        "tags": ["Real-Time Location"],
+        "tags": [
+          "Real-Time Location"
+        ],
         "summary": "Real Time Location For Device",
         "description": "This endpoint returns a real time location for a vehicle using the vehicle id.",
         "operationId": "real_time_location_for_device_location__vehicle_id__get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "vehicle_id",
@@ -402,7 +629,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeGeoEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -411,7 +642,11 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
@@ -419,31 +654,53 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Success_Union_VehicleLocation__FeatureCollection__" }
+                "schema": {
+                  "$ref": "#/components/schemas/Success_Union_VehicleLocation__FeatureCollection__"
+                }
               }
             }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/reports/activity_summary": {
       "get": {
-        "tags": ["Reports"],
+        "tags": [
+          "Reports"
+        ],
         "summary": "Activity Summary Report",
         "description": "Returns the summary of all vehicle activity",
         "operationId": "activity_summary_report_reports_activity_summary_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "start_date",
             "in": "query",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Start datetime",
               "description": "Start time from when the report should be generated for"
             },
@@ -454,7 +711,15 @@
             "in": "query",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "End datetime",
               "description": "End time from when the report should be generated for"
             },
@@ -465,7 +730,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -474,32 +743,63 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "Successful Response", "content": { "application/json": { "schema": {} } } },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/reports/idling_summary": {
       "get": {
-        "tags": ["Reports"],
+        "tags": [
+          "Reports"
+        ],
         "summary": "Idling Summary Report",
         "description": "Returns the idling summary of all the devices",
         "operationId": "idling_summary_report_reports_idling_summary_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "start_date",
             "in": "query",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Start datetime",
               "description": "Start time from when the report should be generated for"
             },
@@ -510,7 +810,15 @@
             "in": "query",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "End datetime",
               "description": "End time from when the report should be generated for"
             },
@@ -521,7 +829,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -530,32 +842,63 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "Successful Response", "content": { "application/json": { "schema": {} } } },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/reports/off_road_summary": {
       "get": {
-        "tags": ["Reports"],
+        "tags": [
+          "Reports"
+        ],
         "summary": "Off Road Summary",
         "description": "Returns the off-road summary of all the devices",
         "operationId": "off_road_summary_reports_off_road_summary_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "start_date",
             "in": "query",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Start datetime",
               "description": "Start time from when the report should be generated for"
             },
@@ -566,7 +909,15 @@
             "in": "query",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "End datetime",
               "description": "End time from when the report should be generated for"
             },
@@ -577,7 +928,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -586,32 +941,63 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "Successful Response", "content": { "application/json": { "schema": {} } } },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/reports/location_summary": {
       "get": {
-        "tags": ["Reports"],
+        "tags": [
+          "Reports"
+        ],
         "summary": "Location Summary Report",
         "description": "Returns the location summary of all the devices",
         "operationId": "location_summary_report_reports_location_summary_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "start_date",
             "in": "query",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Start datetime",
               "description": "Start time from when the report should be generated for"
             },
@@ -622,7 +1008,15 @@
             "in": "query",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "End datetime",
               "description": "End time from when the report should be generated for"
             },
@@ -633,7 +1027,11 @@
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -642,38 +1040,69 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "Successful Response", "content": { "application/json": { "schema": {} } } },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/providers": {
       "get": {
-        "tags": ["Providers"],
+        "tags": [
+          "Providers"
+        ],
         "summary": "Providers",
         "description": "This endpoint returns a list of all providers available on the platform",
         "operationId": "providers_providers_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           },
           {
             "name": "accept",
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -682,29 +1111,54 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Success_List_Provider__" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_List_Provider__"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/providers/{provider_name}": {
       "get": {
-        "tags": ["Providers"],
+        "tags": [
+          "Providers"
+        ],
         "summary": "Provider",
         "description": "This endpoint returns information about a particular provider",
         "operationId": "provider_providers__provider_name__get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "provider_name",
             "in": "path",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Provider Name",
               "description": "Name of the provider"
             },
@@ -714,14 +1168,22 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           },
           {
             "name": "accept",
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -730,35 +1192,61 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Success_Provider_" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_Provider_"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/account": {
       "get": {
-        "tags": ["Accounts"],
+        "tags": [
+          "Accounts"
+        ],
         "summary": "Accounts",
         "description": "This endpoint returns a list of all providers available on the platform",
         "operationId": "accounts_account_get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           },
           {
             "name": "accept",
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -767,29 +1255,54 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Success_List_Account__" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_List_Account__"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/accounts/{account_name}": {
       "get": {
-        "tags": ["Accounts"],
+        "tags": [
+          "Accounts"
+        ],
         "summary": "Account",
         "description": "This endpoint returns information about a particular account",
         "operationId": "account_accounts__account_name__get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "account_name",
             "in": "path",
             "required": true,
             "schema": {
-              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Account Name",
               "description": "Name of the account"
             },
@@ -799,14 +1312,22 @@
             "name": "api-version",
             "in": "header",
             "required": false,
-            "schema": { "type": "string", "default": 0.1, "title": "Api-Version" }
+            "schema": {
+              "type": "string",
+              "default": 0.1,
+              "title": "Api-Version"
+            }
           },
           {
             "name": "accept",
             "in": "header",
             "required": false,
             "schema": {
-              "allOf": [{ "$ref": "#/components/schemas/ContentTypeEnum" }],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ContentTypeEnum"
+                }
+              ],
               "default": "application/json",
               "title": "Accept"
             }
@@ -815,18 +1336,32 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Success_Account_" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_Account_"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
     },
     "/boundaries": {
       "get": {
-        "tags": ["Boundaries"],
+        "tags": [
+          "Boundaries"
+        ],
         "summary": "Get Boundaries",
         "description": "Allows a user to view all the boundaries that will be used to filter trips",
         "operationId": "get_boundaries_boundaries_get",
@@ -834,14 +1369,24 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Success_FeatureCollection_" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_FeatureCollection_"
+                }
+              }
             }
           }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }]
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       },
       "post": {
-        "tags": ["Boundaries"],
+        "tags": [
+          "Boundaries"
+        ],
         "summary": "Create Boundary",
         "description": "Allows a user to create boundaries that will be used to filter trips that lie within the boundary",
         "operationId": "create_boundary_boundaries_post",
@@ -856,67 +1401,122 @@
           "required": true
         },
         "responses": {
-          "200": { "description": "Successful Response", "content": { "application/json": { "schema": {} } } },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }]
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/boundary/{boundary_id}": {
       "get": {
-        "tags": ["Boundaries"],
+        "tags": [
+          "Boundaries"
+        ],
         "summary": "Get Boundary",
         "description": "Allows a user to view a boundary that will be used to filter trips",
         "operationId": "get_boundary_boundary__boundary_id__get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "boundary_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "title": "Boundary Id" }
+            "schema": {
+              "type": "string",
+              "title": "Boundary Id"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Success_FeatureCollection_" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_FeatureCollection_"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "tags": ["Boundaries"],
+        "tags": [
+          "Boundaries"
+        ],
         "summary": "Delete Boundary",
         "description": "Allows a user to delete all the boundaries that will be used to filter trips",
         "operationId": "delete_boundary_boundary__boundary_id__delete",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "boundary_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "title": "Boundary Id" }
+            "schema": {
+              "type": "string",
+              "title": "Boundary Id"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Success_FeatureCollection_" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_FeatureCollection_"
+                }
+              }
             }
           },
           "422": {
             "description": "Validation Error",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
@@ -926,9 +1526,17 @@
     "schemas": {
       "Account": {
         "properties": {
-          "name": { "type": "string", "title": "Name", "description": "Name of the account" },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Name of the account"
+          },
           "location": {
-            "allOf": [{ "$ref": "#/components/schemas/Location" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Location"
+              }
+            ],
             "description": "Location details of the account"
           },
           "phone_number": {
@@ -940,7 +1548,11 @@
           }
         },
         "type": "object",
-        "required": ["name", "location", "phone_number"],
+        "required": [
+          "name",
+          "location",
+          "phone_number"
+        ],
         "title": "Account"
       },
       "AuxiliaryEquipment": {
@@ -962,7 +1574,11 @@
           }
         },
         "type": "object",
-        "required": ["auxiliary_equipment_type", "auxiliary_fuel_use", "auxiliary_fuel_method"],
+        "required": [
+          "auxiliary_equipment_type",
+          "auxiliary_fuel_use",
+          "auxiliary_fuel_method"
+        ],
         "title": "AuxiliaryEquipment"
       },
       "BaseModel": {
@@ -974,36 +1590,98 @@
       "Body_login_token_post": {
         "properties": {
           "grant_type": {
-            "anyOf": [{ "type": "string", "pattern": "password" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "password"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Grant Type"
           },
-          "username": { "type": "string", "title": "Username" },
-          "password": { "type": "string", "title": "Password" },
-          "scope": { "type": "string", "title": "Scope", "default": "" },
-          "client_id": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Client Id" },
-          "client_secret": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Client Secret" }
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope",
+            "default": ""
+          },
+          "client_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Client Id"
+          },
+          "client_secret": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Client Secret"
+          }
         },
         "type": "object",
-        "required": ["username", "password"],
+        "required": [
+          "username",
+          "password"
+        ],
         "title": "Body_login_token_post"
       },
       "ContentTypeEnum": {
         "type": "string",
-        "enum": ["application/json", "application/bson"],
+        "enum": [
+          "application/json",
+          "application/bson"
+        ],
         "title": "ContentTypeEnum"
       },
       "ContentTypeGeoEnum": {
         "type": "string",
-        "enum": ["application/geo+json", "application/vnd.mapbox-vector-tile", "application/json", "application/bson"],
+        "enum": [
+          "application/geo+json",
+          "application/vnd.mapbox-vector-tile",
+          "application/json",
+          "application/bson"
+        ],
         "title": "ContentTypeGeoEnum"
       },
       "Device": {
         "properties": {
-          "provider": { "type": "string", "title": "Provider", "description": "Telematics provider name" },
-          "model": { "type": "string", "title": "Model", "description": "" },
-          "firmware": { "type": "string", "title": "Firmware" },
+          "provider": {
+            "type": "string",
+            "title": "Provider",
+            "description": "Telematics provider name"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model",
+            "description": ""
+          },
+          "firmware": {
+            "type": "string",
+            "title": "Firmware"
+          },
           "network_connectivity": {
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array",
             "title": "Network Connectivity",
             "description": "Network connectivity available on devices"
@@ -1032,44 +1710,87 @@
         ],
         "title": "Device"
       },
-      "Feature": { "type": "object", "title": "Feature", "description": "Feature Model" },
-      "FeatureCollection": { "type": "object", "title": "FeatureCollection", "description": "FeatureCollection Model" },
+      "Feature": {
+        "type": "object",
+        "title": "Feature",
+        "description": "Feature Model"
+      },
+      "FeatureCollection": {
+        "type": "object",
+        "title": "FeatureCollection",
+        "description": "FeatureCollection Model"
+      },
       "FeatureCollection_Feature_Union_MultiPolygon__Polygon___NoneType__": {
         "properties": {
           "bbox": {
             "anyOf": [
               {
-                "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" }],
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
                 "type": "array",
                 "maxItems": 4,
                 "minItems": 4
               },
               {
                 "prefixItems": [
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" }
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
                 ],
                 "type": "array",
                 "maxItems": 6,
                 "minItems": 6
               },
-              { "type": "null" }
+              {
+                "type": "null"
+              }
             ],
             "title": "Bbox"
           },
-          "type": { "const": "FeatureCollection", "title": "Type" },
+          "type": {
+            "const": "FeatureCollection",
+            "title": "Type"
+          },
           "features": {
-            "items": { "$ref": "#/components/schemas/Feature_Union_MultiPolygon__Polygon__NoneType_" },
+            "items": {
+              "$ref": "#/components/schemas/Feature_Union_MultiPolygon__Polygon__NoneType_"
+            },
             "type": "array",
             "title": "Features"
           }
         },
         "type": "object",
-        "required": ["type", "features"],
+        "required": [
+          "type",
+          "features"
+        ],
         "title": "FeatureCollection[Feature[Union[MultiPolygon, Polygon], NoneType]]"
       },
       "Feature_Union_MultiPolygon__Polygon__NoneType_": {
@@ -1077,42 +1798,98 @@
           "bbox": {
             "anyOf": [
               {
-                "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" }],
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
                 "type": "array",
                 "maxItems": 4,
                 "minItems": 4
               },
               {
                 "prefixItems": [
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" }
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
                 ],
                 "type": "array",
                 "maxItems": 6,
                 "minItems": 6
               },
-              { "type": "null" }
+              {
+                "type": "null"
+              }
             ],
             "title": "Bbox"
           },
-          "type": { "const": "Feature", "title": "Type" },
+          "type": {
+            "const": "Feature",
+            "title": "Type"
+          },
           "geometry": {
             "anyOf": [
-              { "$ref": "#/components/schemas/MultiPolygon-Input" },
-              { "$ref": "#/components/schemas/Polygon-Input" },
-              { "type": "null" }
+              {
+                "$ref": "#/components/schemas/MultiPolygon-Input"
+              },
+              {
+                "$ref": "#/components/schemas/Polygon-Input"
+              },
+              {
+                "type": "null"
+              }
             ],
             "title": "Geometry"
           },
-          "properties": { "type": "null", "title": "Properties" },
-          "id": { "anyOf": [{ "type": "integer" }, { "type": "string" }, { "type": "null" }], "title": "Id" }
+          "properties": {
+            "type": "null",
+            "title": "Properties"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          }
         },
         "type": "object",
-        "required": ["type", "geometry", "properties"],
+        "required": [
+          "type",
+          "geometry",
+          "properties"
+        ],
         "title": "Feature[Union[MultiPolygon, Polygon], NoneType]"
       },
       "FuelConsumption": {
@@ -1148,69 +1925,170 @@
       },
       "HTTPValidationError": {
         "properties": {
-          "detail": { "items": { "$ref": "#/components/schemas/ValidationError" }, "type": "array", "title": "Detail" }
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
         },
         "type": "object",
         "title": "HTTPValidationError"
       },
-      "LineString": { "type": "object", "title": "LineString", "description": "LineString Model" },
+      "LineString": {
+        "type": "object",
+        "title": "LineString",
+        "description": "LineString Model"
+      },
       "Location": {
         "properties": {
-          "address_line_1": { "type": "string", "title": "Address Line 1", "description": "Address line 2" },
-          "address_line_2": { "type": "string", "title": "Address Line 2", "description": "Address line 2" },
-          "state": { "type": "string", "title": "State", "description": "Name of state" },
-          "suburb": { "type": "string", "title": "Suburb", "description": "Name of suburb" },
-          "street_name": { "type": "string", "title": "Street Name", "description": "Name of street" },
-          "post_code": { "type": "string", "title": "Post Code", "description": "Post code of location" },
-          "country": { "type": "string", "title": "Country", "description": "Country of location" }
+          "address_line_1": {
+            "type": "string",
+            "title": "Address Line 1",
+            "description": "Address line 2"
+          },
+          "address_line_2": {
+            "type": "string",
+            "title": "Address Line 2",
+            "description": "Address line 2"
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "description": "Name of state"
+          },
+          "suburb": {
+            "type": "string",
+            "title": "Suburb",
+            "description": "Name of suburb"
+          },
+          "street_name": {
+            "type": "string",
+            "title": "Street Name",
+            "description": "Name of street"
+          },
+          "post_code": {
+            "type": "string",
+            "title": "Post Code",
+            "description": "Post code of location"
+          },
+          "country": {
+            "type": "string",
+            "title": "Country",
+            "description": "Country of location"
+          }
         },
         "type": "object",
-        "required": ["address_line_1", "address_line_2", "state", "suburb", "street_name", "post_code", "country"],
+        "required": [
+          "address_line_1",
+          "address_line_2",
+          "state",
+          "suburb",
+          "street_name",
+          "post_code",
+          "country"
+        ],
         "title": "Location"
       },
-      "MultiLineString": { "type": "object", "title": "MultiLineString", "description": "MultiLineString Model" },
-      "MultiPoint": { "type": "object", "title": "MultiPoint", "description": "MultiPoint Model" },
+      "MultiLineString": {
+        "type": "object",
+        "title": "MultiLineString",
+        "description": "MultiLineString Model"
+      },
+      "MultiPoint": {
+        "type": "object",
+        "title": "MultiPoint",
+        "description": "MultiPoint Model"
+      },
       "MultiPolygon-Input": {
         "properties": {
           "bbox": {
             "anyOf": [
               {
-                "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" }],
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
                 "type": "array",
                 "maxItems": 4,
                 "minItems": 4
               },
               {
                 "prefixItems": [
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" }
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
                 ],
                 "type": "array",
                 "maxItems": 6,
                 "minItems": 6
               },
-              { "type": "null" }
+              {
+                "type": "null"
+              }
             ],
             "title": "Bbox"
           },
-          "type": { "const": "MultiPolygon", "title": "Type" },
+          "type": {
+            "const": "MultiPolygon",
+            "title": "Type"
+          },
           "coordinates": {
             "items": {
               "items": {
                 "items": {
                   "anyOf": [
                     {
-                      "prefixItems": [{ "type": "number" }, { "type": "number" }],
+                      "prefixItems": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ],
                       "type": "array",
                       "maxItems": 2,
                       "minItems": 2
                     },
                     {
-                      "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }],
+                      "prefixItems": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ],
                       "type": "array",
                       "maxItems": 3,
                       "minItems": 3
@@ -1227,52 +2105,110 @@
           }
         },
         "type": "object",
-        "required": ["type", "coordinates"],
+        "required": [
+          "type",
+          "coordinates"
+        ],
         "title": "MultiPolygon",
         "description": "MultiPolygon Model"
       },
-      "MultiPolygon-Output": { "type": "object", "title": "MultiPolygon", "description": "MultiPolygon Model" },
-      "Point": { "type": "object", "title": "Point", "description": "Point Model" },
+      "MultiPolygon-Output": {
+        "type": "object",
+        "title": "MultiPolygon",
+        "description": "MultiPolygon Model"
+      },
+      "Point": {
+        "type": "object",
+        "title": "Point",
+        "description": "Point Model"
+      },
       "Polygon-Input": {
         "properties": {
           "bbox": {
             "anyOf": [
               {
-                "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" }],
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
                 "type": "array",
                 "maxItems": 4,
                 "minItems": 4
               },
               {
                 "prefixItems": [
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" },
-                  { "type": "number" }
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
                 ],
                 "type": "array",
                 "maxItems": 6,
                 "minItems": 6
               },
-              { "type": "null" }
+              {
+                "type": "null"
+              }
             ],
             "title": "Bbox"
           },
-          "type": { "const": "Polygon", "title": "Type" },
+          "type": {
+            "const": "Polygon",
+            "title": "Type"
+          },
           "coordinates": {
             "items": {
               "items": {
                 "anyOf": [
                   {
-                    "prefixItems": [{ "type": "number" }, { "type": "number" }],
+                    "prefixItems": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ],
                     "type": "array",
                     "maxItems": 2,
                     "minItems": 2
                   },
                   {
-                    "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }],
+                    "prefixItems": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ],
                     "type": "array",
                     "maxItems": 3,
                     "minItems": 3
@@ -1287,16 +2223,31 @@
           }
         },
         "type": "object",
-        "required": ["type", "coordinates"],
+        "required": [
+          "type",
+          "coordinates"
+        ],
         "title": "Polygon",
         "description": "Polygon Model"
       },
-      "Polygon-Output": { "type": "object", "title": "Polygon", "description": "Polygon Model" },
+      "Polygon-Output": {
+        "type": "object",
+        "title": "Polygon",
+        "description": "Polygon Model"
+      },
       "Provider": {
         "properties": {
-          "name": { "type": "string", "title": "Name", "description": "Name of the provider" },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Name of the provider"
+          },
           "location": {
-            "allOf": [{ "$ref": "#/components/schemas/Location" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Location"
+              }
+            ],
             "description": "Location details of the provider"
           },
           "phone_number": {
@@ -1308,17 +2259,37 @@
           }
         },
         "type": "object",
-        "required": ["name", "location", "phone_number"],
+        "required": [
+          "name",
+          "location",
+          "phone_number"
+        ],
         "title": "Provider"
       },
       "Registration": {
         "properties": {
-          "number": { "type": "string", "title": "Number" },
-          "state": { "type": "string", "title": "State" },
-          "charge_code": { "type": "string", "title": "Charge Code", "description": "NHVR Charge code" },
-          "is_pbs": { "type": "boolean", "title": "Is Pbs", "description": "Is the vehicle PBS approved" },
+          "number": {
+            "type": "string",
+            "title": "Number"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "charge_code": {
+            "type": "string",
+            "title": "Charge Code",
+            "description": "NHVR Charge code"
+          },
+          "is_pbs": {
+            "type": "boolean",
+            "title": "Is Pbs",
+            "description": "Is the vehicle PBS approved"
+          },
           "cost_components": {
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array",
             "title": "Cost Components",
             "description": ""
@@ -1348,14 +2319,41 @@
         ],
         "title": "Registration"
       },
-      "RoadClassification": { "type": "string", "enum": ["Public", "Private"], "title": "RoadClassification" },
+      "RoadClassification": {
+        "type": "string",
+        "enum": [
+          "Public",
+          "Private"
+        ],
+        "title": "RoadClassification"
+      },
       "Specification": {
         "properties": {
-          "vin": { "type": "string", "title": "Vin", "description": "Vehicle VIN number" },
-          "description": { "type": "string", "title": "Description", "description": "Description of the vehicle" },
-          "make": { "type": "string", "title": "Make", "description": "Vehicle make" },
-          "model": { "type": "string", "title": "Model", "description": "Vehicle model" },
-          "variant": { "type": "string", "title": "Variant", "description": "Vehicle variant if any" },
+          "vin": {
+            "type": "string",
+            "title": "Vin",
+            "description": "Vehicle VIN number"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Description of the vehicle"
+          },
+          "make": {
+            "type": "string",
+            "title": "Make",
+            "description": "Vehicle make"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model",
+            "description": "Vehicle model"
+          },
+          "variant": {
+            "type": "string",
+            "title": "Variant",
+            "description": "Vehicle variant if any"
+          },
           "build_year": {
             "type": "integer",
             "maximum": 9999.0,
@@ -1363,38 +2361,71 @@
             "title": "Build Year",
             "description": "Year vehicle was built in"
           },
-          "drive_train": { "type": "string", "title": "Drive Train" },
-          "fuel_type": { "type": "string", "title": "Fuel Type", "description": "Vehicle fuel type" },
+          "drive_train": {
+            "type": "string",
+            "title": "Drive Train"
+          },
+          "fuel_type": {
+            "type": "string",
+            "title": "Fuel Type",
+            "description": "Vehicle fuel type"
+          },
           "transmission_type": {
             "type": "string",
             "title": "Transmission Type",
             "description": "Vehicle transmission type"
           },
           "min_weight": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Minimum weight the vehicle can carry"
           },
           "max_weight": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Maximum weight the vehicle can carry"
           },
-          "category": { "type": "string", "title": "Category", "description": "Vehicle Category" },
+          "category": {
+            "type": "string",
+            "title": "Category",
+            "description": "Vehicle Category"
+          },
           "gross_vehicle_mass": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Gross vehicle mass of the vehicle in tonnes"
           },
           "gross_combination_mass": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Gross combination mass of the vehicle in tonnes"
           },
           "auxiliary_equipment": {
-            "items": { "$ref": "#/components/schemas/AuxiliaryEquipment" },
+            "items": {
+              "$ref": "#/components/schemas/AuxiliaryEquipment"
+            },
             "type": "array",
             "title": "Auxiliary Equipment",
             "description": "Auxiliary equipment details"
           },
           "fuel_consumption": {
-            "allOf": [{ "$ref": "#/components/schemas/FuelConsumption" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FuelConsumption"
+              }
+            ],
             "description": "Fuel consumption details for the vehicle"
           }
         },
@@ -1422,156 +2453,240 @@
       "Success_Account_": {
         "properties": {
           "data": {
-            "allOf": [{ "$ref": "#/components/schemas/Account" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Account"
+              }
+            ],
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[Account]"
       },
       "Success_Device_": {
         "properties": {
-          "data": { "allOf": [{ "$ref": "#/components/schemas/Device" }], "description": "Successful response payload" }
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Device"
+              }
+            ],
+            "description": "Successful response payload"
+          }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[Device]"
       },
       "Success_FeatureCollection_": {
         "properties": {
           "data": {
-            "allOf": [{ "$ref": "#/components/schemas/FeatureCollection" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FeatureCollection"
+              }
+            ],
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[FeatureCollection]"
       },
       "Success_List_Account__": {
         "properties": {
           "data": {
-            "items": { "$ref": "#/components/schemas/Account" },
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            },
             "type": "array",
             "title": "Data",
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[List[Account]]"
       },
       "Success_List_Provider__": {
         "properties": {
           "data": {
-            "items": { "$ref": "#/components/schemas/Provider" },
+            "items": {
+              "$ref": "#/components/schemas/Provider"
+            },
             "type": "array",
             "title": "Data",
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[List[Provider]]"
       },
       "Success_List_TripInformation__": {
         "properties": {
           "data": {
-            "items": { "$ref": "#/components/schemas/TripInformation" },
+            "items": {
+              "$ref": "#/components/schemas/TripInformation"
+            },
             "type": "array",
             "title": "Data",
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[List[TripInformation]]"
       },
       "Success_List_VehiclePointData__": {
         "properties": {
           "data": {
-            "items": { "$ref": "#/components/schemas/VehiclePointData" },
+            "items": {
+              "$ref": "#/components/schemas/VehiclePointData"
+            },
             "type": "array",
             "title": "Data",
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[List[VehiclePointData]]"
       },
       "Success_List_Vehicle__": {
         "properties": {
           "data": {
-            "items": { "$ref": "#/components/schemas/Vehicle" },
+            "items": {
+              "$ref": "#/components/schemas/Vehicle"
+            },
             "type": "array",
             "title": "Data",
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[List[Vehicle]]"
       },
       "Success_Provider_": {
         "properties": {
           "data": {
-            "allOf": [{ "$ref": "#/components/schemas/Provider" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Provider"
+              }
+            ],
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[Provider]"
       },
       "Success_Union_List_VehicleLocation___List_FeatureCollection___": {
         "properties": {
           "data": {
             "anyOf": [
-              { "items": { "$ref": "#/components/schemas/VehicleLocation" }, "type": "array" },
-              { "items": { "$ref": "#/components/schemas/FeatureCollection" }, "type": "array" }
+              {
+                "items": {
+                  "$ref": "#/components/schemas/VehicleLocation"
+                },
+                "type": "array"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/FeatureCollection"
+                },
+                "type": "array"
+              }
             ],
             "title": "Data",
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[Union[List[VehicleLocation], List[FeatureCollection]]]"
       },
       "Success_Union_VehicleLocation__FeatureCollection__": {
         "properties": {
           "data": {
             "anyOf": [
-              { "$ref": "#/components/schemas/VehicleLocation" },
-              { "$ref": "#/components/schemas/FeatureCollection" }
+              {
+                "$ref": "#/components/schemas/VehicleLocation"
+              },
+              {
+                "$ref": "#/components/schemas/FeatureCollection"
+              }
             ],
             "title": "Data",
             "description": "Successful response payload"
           }
         },
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "title": "Success[Union[VehicleLocation, FeatureCollection]]"
       },
       "TripInformation": {
         "properties": {
-          "trip_id": { "type": "string", "title": "Trip Id" },
+          "trip_id": {
+            "type": "string",
+            "title": "Trip Id"
+          },
           "total_duration": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Total trip duration"
           },
           "driving_durations": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Total trip driving duration"
           },
           "idling_duration": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Total trip idling duration"
           },
           "distance": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Total distance travelling in kilometers"
           },
           "trip_start_time_utc": {
@@ -1587,11 +2702,19 @@
             "description": "Trip end time"
           },
           "start_location": {
-            "allOf": [{ "$ref": "#/components/schemas/Location" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Location"
+              }
+            ],
             "description": "Location details of where the trip started"
           },
           "end_location": {
-            "allOf": [{ "$ref": "#/components/schemas/Location" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Location"
+              }
+            ],
             "description": "Location details of where the trip ended"
           }
         },
@@ -1611,8 +2734,16 @@
       },
       "Units": {
         "properties": {
-          "type": { "type": "string", "title": "Type", "description": "Type of unit, example - Weight, Distance etc" },
-          "value": { "type": "number", "title": "Value", "description": "Value of the unit" },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "description": "Type of unit, example - Weight, Distance etc"
+          },
+          "value": {
+            "type": "number",
+            "title": "Value",
+            "description": "Value of the unit"
+          },
           "metric_unit": {
             "type": "string",
             "title": "Metric Unit",
@@ -1620,45 +2751,88 @@
           }
         },
         "type": "object",
-        "required": ["type", "value", "metric_unit"],
+        "required": [
+          "type",
+          "value",
+          "metric_unit"
+        ],
         "title": "Units"
       },
       "ValidationError": {
         "properties": {
           "loc": {
-            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
             "type": "array",
             "title": "Location"
           },
-          "msg": { "type": "string", "title": "Message" },
-          "type": { "type": "string", "title": "Error Type" }
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
         },
         "type": "object",
-        "required": ["loc", "msg", "type"],
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
         "title": "ValidationError"
       },
       "Vehicle": {
         "properties": {
-          "id": { "type": "string", "title": "Id", "description": "Midland generated ID" },
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Midland generated ID"
+          },
           "source_id": {
             "type": "string",
             "title": "Source Id",
             "description": "Telematics provider generated ID can be useful to traceback to the telematics provider"
           },
           "device": {
-            "allOf": [{ "$ref": "#/components/schemas/Device" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Device"
+              }
+            ],
             "description": "Device information from the telematics provider"
           },
           "registration": {
-            "allOf": [{ "$ref": "#/components/schemas/Registration" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Registration"
+              }
+            ],
             "description": "Registration details for the vehicle"
           },
           "specification": {
-            "allOf": [{ "$ref": "#/components/schemas/Specification" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Specification"
+              }
+            ],
             "description": "Specification details for the vehicle"
           },
           "history": {
-            "allOf": [{ "$ref": "#/components/schemas/VehicleHistory" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VehicleHistory"
+              }
+            ],
             "description": "History of the vehicle"
           },
           "is_disabled": {
@@ -1668,7 +2842,15 @@
           }
         },
         "type": "object",
-        "required": ["id", "source_id", "device", "registration", "specification", "history", "is_disabled"],
+        "required": [
+          "id",
+          "source_id",
+          "device",
+          "registration",
+          "specification",
+          "history",
+          "is_disabled"
+        ],
         "title": "Vehicle"
       },
       "VehicleHistory": {
@@ -1687,12 +2869,19 @@
           }
         },
         "type": "object",
-        "required": ["acquired_date_utc", "disposed_date_utc"],
+        "required": [
+          "acquired_date_utc",
+          "disposed_date_utc"
+        ],
         "title": "VehicleHistory"
       },
       "VehicleLocation": {
         "properties": {
-          "id": { "type": "string", "title": "Id", "description": "Point id, if any" },
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Point id, if any"
+          },
           "timestamp": {
             "type": "string",
             "format": "date-time",
@@ -1714,17 +2903,33 @@
             "title": "Odometer Kilometers",
             "description": "Odometer value of the device when the reading was taken"
           },
-          "engine_rpm": { "type": "string", "title": "Engine Rpm", "description": "RPM of the engine" },
+          "engine_rpm": {
+            "type": "string",
+            "title": "Engine Rpm",
+            "description": "RPM of the engine"
+          },
           "location": {
-            "allOf": [{ "$ref": "#/components/schemas/Location" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Location"
+              }
+            ],
             "description": "Location details of where the point was recorded"
           },
           "road_classification": {
-            "allOf": [{ "$ref": "#/components/schemas/RoadClassification" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RoadClassification"
+              }
+            ],
             "description": "Is the point data on a public road or not"
           },
           "fuel": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Fuel value in litres if recorded"
           },
           "latitude": {
@@ -1756,8 +2961,15 @@
       },
       "VehiclePointData": {
         "properties": {
-          "id": { "type": "string", "title": "Id" },
-          "hdop": { "type": "integer", "title": "Hdop", "description": "Horizontal dilution of precision" },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "hdop": {
+            "type": "integer",
+            "title": "Hdop",
+            "description": "Horizontal dilution of precision"
+          },
           "number_of_satellites": {
             "type": "integer",
             "title": "Number Of Satellites",
@@ -1769,11 +2981,19 @@
             "description": "Vehicle odometer when the point was recorded"
           },
           "speed": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Vehicle speed when the point was recorded"
           },
           "altitude": {
-            "allOf": [{ "$ref": "#/components/schemas/Units" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Units"
+              }
+            ],
             "description": "Vehicle altitude when the point was recorded"
           },
           "heading": {
@@ -1798,7 +3018,11 @@
             "description": "Dict containing any events that have been recorded"
           },
           "location": {
-            "allOf": [{ "$ref": "#/components/schemas/Location" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Location"
+              }
+            ],
             "description": "Location details of where the point was recorded"
           },
           "status": {
@@ -1816,9 +3040,17 @@
             "title": "Odometer Kilometers",
             "description": "Odometer value of the device when the reading was taken"
           },
-          "engine_rpm": { "type": "string", "title": "Engine Rpm", "description": "RPM of the engine" },
+          "engine_rpm": {
+            "type": "string",
+            "title": "Engine Rpm",
+            "description": "RPM of the engine"
+          },
           "road_classification": {
-            "allOf": [{ "$ref": "#/components/schemas/RoadClassification" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RoadClassification"
+              }
+            ],
             "description": "Is the point data on a public road or not"
           }
         },
@@ -1845,7 +3077,10 @@
       }
     },
     "securitySchemes": {
-      "OAuth2PasswordBearer": { "type": "oauth2", "flows": { "password": { "scopes": {}, "tokenUrl": "token" } } }
+      "OAuth2PasswordBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
     }
   }
 }
