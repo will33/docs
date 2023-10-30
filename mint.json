@@ -64,12 +64,6 @@
       ]
     },
     {
-      "group": "Providers",
-      "pages": [
-        "api-reference/providers/providers"
-      ]
-    },
-    {
       "group": "Connections",
       "pages": [
         "api-reference/connections/connections",

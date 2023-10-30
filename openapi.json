@@ -107,69 +107,6 @@
         }
       }
     },
-    "/provider": {
-      "get": {
-        "tags": [
-          "Providers"
-        ],
-        "summary": "Providers",
-        "description": "Returns the list of providers supported by our system.\nThese can be used in the telematics_provider field for filtering in some API calls.",
-        "operationId": "providers_provider_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success_List_str__"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/connection": {
       "get": {
         "tags": [
@@ -191,7 +128,7 @@
             "schema": {
               "anyOf": [
                 {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ProviderEnum"
                 },
                 {
                   "type": "null"
@@ -272,7 +209,8 @@
             "schema": {
               "anyOf": [
                 {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uuid"
                 },
                 {
                   "type": "null"
@@ -353,7 +291,7 @@
             "schema": {
               "anyOf": [
                 {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ProviderEnum"
                 },
                 {
                   "type": "null"
@@ -433,6 +371,7 @@
             "required": true,
             "schema": {
               "type": "string",
+              "format": "uuid",
               "title": "Vehicle id",
               "description": "Device ID of the device to be requested"
             },
@@ -508,7 +447,7 @@
             "schema": {
               "anyOf": [
                 {
-                  "type": "string"
+                  "$ref": "#/components/schemas/EventTypeEnum"
                 },
                 {
                   "type": "null"
@@ -564,7 +503,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                  "$ref": "#/components/schemas/ContentTypeEnum"
                 }
               ],
               "default": "application/json",
@@ -626,6 +565,7 @@
             "required": true,
             "schema": {
               "type": "string",
+              "format": "uuid",
               "title": "Event id",
               "description": "Id of the Event to be returned"
             },
@@ -638,7 +578,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                  "$ref": "#/components/schemas/ContentTypeEnum"
                 }
               ],
               "default": "application/json",
@@ -700,6 +640,7 @@
             "required": true,
             "schema": {
               "type": "string",
+              "format": "uuid",
               "title": "Device id",
               "description": "Device id of the trip to be requested"
             },
@@ -750,7 +691,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                  "$ref": "#/components/schemas/ContentTypeEnum"
                 }
               ],
               "default": "application/json",
@@ -812,6 +753,7 @@
             "required": true,
             "schema": {
               "type": "string",
+              "format": "uuid",
               "title": "Trip id",
               "description": "Id of the trip to be requested"
             },
@@ -824,7 +766,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                  "$ref": "#/components/schemas/ContentTypeEnum"
                 }
               ],
               "default": "application/json",
@@ -886,6 +828,7 @@
             "required": true,
             "schema": {
               "type": "string",
+              "format": "uuid",
               "title": "Vehicle id",
               "description": "Vehicle id of the vehicle to be requested. Format: yyyy-MM-ddThh:mm:ss"
             },
@@ -936,7 +879,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/ContentTypeGeoEnum"
+                  "$ref": "#/components/schemas/ContentTypeEnum"
                 }
               ],
               "default": "application/json",
@@ -1117,16 +1060,6 @@
         ],
         "title": "ContentTypeEnum"
       },
-      "ContentTypeGeoEnum": {
-        "type": "string",
-        "enum": [
-          "application/geo+json",
-          "application/vnd.mapbox-vector-tile",
-          "application/json",
-          "application/bson"
-        ],
-        "title": "ContentTypeGeoEnum"
-      },
       "Device": {
         "properties": {
           "system_device_id": {
@@ -1248,6 +1181,14 @@
         ],
         "title": "Event"
       },
+      "EventTypeEnum": {
+        "type": "string",
+        "enum": [
+          "ignition_on",
+          "ignition_off"
+        ],
+        "title": "EventTypeEnum"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -1356,6 +1297,17 @@
           "trip_id"
         ],
         "title": "Point"
+      },
+      "ProviderEnum": {
+        "type": "string",
+        "enum": [
+          "mtdata",
+          "geotab",
+          "navman",
+          "mixtelematics",
+          "radius"
+        ],
+        "title": "ProviderEnum"
       },
       "Success_Connection_": {
         "properties": {
@@ -1509,23 +1461,6 @@
           "data"
         ],
         "title": "Success[List[Trip]]"
-      },
-      "Success_List_str__": {
-        "properties": {
-          "data": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Data",
-            "description": "Successful response payload"
-          }
-        },
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "title": "Success[List[str]]"
       },
       "Success_Trip_": {
         "properties": {
