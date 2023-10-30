@@ -58,6 +58,25 @@
       ]
     },
     {
+      "group": "Tenancies",
+      "pages": [
+        "api-reference/tenancies/tenancies"
+      ]
+    },
+    {
+      "group": "Providers",
+      "pages": [
+        "api-reference/providers/providers"
+      ]
+    },
+    {
+      "group": "Connections",
+      "pages": [
+        "api-reference/connections/connections",
+        "api-reference/connections/connection-by-id"
+      ]
+    },
+    {
       "group": "Devices",
       "pages": [
         "api-reference/devices/devices",
@@ -65,55 +84,23 @@
       ]
     },
     {
-      "group": "Positions",
+      "group": "Events",
       "pages": [
-        "api-reference/positions/positions"
+        "api-reference/events/events",
+        "api-reference/events/event-by-id"
       ]
     },
     {
       "group": "Trips",
       "pages": [
         "api-reference/trips/trips",
-        "api-reference/trips/trips-for-device"
+        "api-reference/trips/trip-by-id"
       ]
     },
     {
-      "group": "Real-Time Location",
+      "group": "Positions",
       "pages": [
-        "api-reference/real-time-location/real-time-locations",
-        "api-reference/real-time-location/real-time-location-for-device"
-      ]
-    },
-    {
-      "group": "Reports",
-      "pages": [
-        "api-reference/reports/activity-summary-report",
-        "api-reference/reports/idling-summary-report",
-        "api-reference/reports/off-road-summary",
-        "api-reference/reports/location-summary-report"
-      ]
-    },
-    {
-      "group": "Providers",
-      "pages": [
-        "api-reference/providers/providers",
-        "api-reference/providers/provider"
-      ]
-    },
-    {
-      "group": "Accounts",
-      "pages": [
-        "api-reference/accounts/accounts",
-        "api-reference/accounts/account"
-      ]
-    },
-    {
-      "group": "Boundaries",
-      "pages": [
-        "api-reference/boundaries/get-boundaries",
-        "api-reference/boundaries/create-boundary",
-        "api-reference/boundaries/get-boundary",
-        "api-reference/boundaries/delete-boundary"
+        "api-reference/positions/positions"
       ]
     }
   ],
