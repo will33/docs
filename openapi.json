@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://api.dev.vertha.io/",
+      "url": "http://api.dev.vertha.io",
       "description": "Dev environment"
     }
   ],

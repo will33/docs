@@ -7,4 +7,4 @@ start:
 
 update-api:
 	python3 convert.py
-	npx @mintlify/scraping@latest openapi-file openapi.json -o api-reference
+	npx @mintlify/scraping openapi-file openapi.json -o api-reference
