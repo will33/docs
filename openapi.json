@@ -1441,10 +1441,6 @@
       "JWTBearer": {
         "type": "http",
         "scheme": "bearer"
-      },
-      "OAuth2PasswordBearer": {
-        "type": "http",
-        "scheme": "bearer"
       }
     }
   }
