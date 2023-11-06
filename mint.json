@@ -54,7 +54,8 @@
     {
       "group": "Auth",
       "pages": [
-        "api-reference/auth/login"
+        "api-reference/auth/login",
+        "api-reference/auth/refresh"
       ]
     },
     {
@@ -94,7 +95,8 @@
     {
       "group": "Positions",
       "pages": [
-        "api-reference/positions/positions"
+        "api-reference/positions/positions",
+        "api-reference/positions/positions-by-trip-id"
       ]
     }
   ],

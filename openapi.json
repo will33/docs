@@ -4,6 +4,12 @@
     "title": "FastAPI",
     "version": "0.1.0"
   },
+  "servers": [
+    {
+      "url": "http://api.dev.vertha.io/",
+      "description": "Dev environment"
+    }
+  ],
   "paths": {
     "/token": {
       "post": {
@@ -11,12 +17,13 @@
           "Auth"
         ],
         "summary": "Login",
+        "description": "This endpoint takes a username/email and password and returns an access token and refresh token.\n\nThe access token can be used for subsequent calls.",
         "operationId": "login_token_post",
         "requestBody": {
           "content": {
-            "application/x-www-form-urlencoded": {
+            "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Body_login_token_post"
+                "$ref": "#/components/schemas/UsernamePassword"
               }
             }
           },
@@ -27,7 +34,53 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "title": "Response Login Token Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh",
+        "description": "This endpoint takes the internal username (UUID) which can be found in the sub parameter of the access token, and\na refresh token and returns an access token and refresh token.\n\nThe access token can be used for subsequent calls.",
+        "operationId": "refresh_refresh_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshToken"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Refresh Refresh Post"
+                }
               }
             }
           },
@@ -52,37 +105,6 @@
         "summary": "Tenancies",
         "description": "This endpoint returns all Tenancies.",
         "operationId": "tenancies_tenancy_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -93,18 +115,13 @@
                 }
               }
             }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearer": []
+          }
+        ]
       }
     },
     "/connection": {
@@ -117,7 +134,7 @@
         "operationId": "connections_connection_get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -126,42 +143,15 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
+              "allOf": [
                 {
                   "$ref": "#/components/schemas/ProviderEnum"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "title": "Telematics Provider",
               "description": "Name of the telematics, use this if you want to filter the results to a certain telematics provider"
             },
             "description": "Name of the telematics, use this if you want to filter the results to a certain telematics provider"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
           }
         ],
         "responses": {
@@ -198,7 +188,7 @@
         "operationId": "connection_by_id_connection__connection_id__get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -207,43 +197,12 @@
             "in": "path",
             "required": true,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "type": "string",
+              "format": "uuid",
               "title": "Connection ID",
               "description": "ID of the connection to be requested"
             },
             "description": "ID of the connection to be requested"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
           }
         ],
         "responses": {
@@ -280,7 +239,7 @@
         "operationId": "devices_device_get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -289,42 +248,15 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
+              "allOf": [
                 {
                   "$ref": "#/components/schemas/ProviderEnum"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "title": "Telematics Provider",
               "description": "Name of the telematics, use this if you want to filter the results to a certain telematics provider"
             },
             "description": "Name of the telematics, use this if you want to filter the results to a certain telematics provider"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
           }
         ],
         "responses": {
@@ -361,7 +293,7 @@
         "operationId": "device_by_id_device__device_id__get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -376,30 +308,6 @@
               "description": "Device ID of the device to be requested"
             },
             "description": "Device ID of the device to be requested"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
           }
         ],
         "responses": {
@@ -436,7 +344,7 @@
         "operationId": "events_event_get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -445,12 +353,9 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
+              "allOf": [
                 {
                   "$ref": "#/components/schemas/EventTypeEnum"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "title": "Event type",
@@ -463,15 +368,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "type": "string",
+              "format": "date-time",
               "title": "Start time",
               "description": "Start time from when the data will be returned"
             },
@@ -482,43 +380,12 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "type": "string",
+              "format": "date-time",
               "title": "End time",
               "description": "End time from when the data will be returned"
             },
             "description": "End time from when the data will be returned"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
           }
         ],
         "responses": {
@@ -555,7 +422,7 @@
         "operationId": "event_by_id_event__event_id__get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -570,30 +437,6 @@
               "description": "Id of the Event to be returned"
             },
             "description": "Id of the Event to be returned"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
           }
         ],
         "responses": {
@@ -630,7 +473,7 @@
         "operationId": "trips_trip_get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -651,15 +494,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "type": "string",
+              "format": "date-time",
               "title": "Start time",
               "description": "Start time from when the data will be returned"
             },
@@ -670,43 +506,12 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "type": "string",
+              "format": "date-time",
               "title": "End time",
               "description": "End time from when the data will be returned"
             },
             "description": "End time from when the data will be returned"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
           }
         ],
         "responses": {
@@ -743,7 +548,7 @@
         "operationId": "trip_by_id_trip__trip_id__get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -758,30 +563,6 @@
               "description": "Id of the trip to be requested"
             },
             "description": "Id of the trip to be requested"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
-                }
-              ],
-              "default": "application/json",
-              "title": "Accept"
-            }
-          },
-          {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
           }
         ],
         "responses": {
@@ -818,7 +599,7 @@
         "operationId": "positions_position_get",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "JWTBearer": []
           }
         ],
         "parameters": [
@@ -830,24 +611,17 @@
               "type": "string",
               "format": "uuid",
               "title": "Vehicle id",
-              "description": "Vehicle id of the vehicle to be requested. Format: yyyy-MM-ddThh:mm:ss"
+              "description": "Vehicle id of the vehicle to be requested"
             },
-            "description": "Vehicle id of the vehicle to be requested. Format: yyyy-MM-ddThh:mm:ss"
+            "description": "Vehicle id of the vehicle to be requested"
           },
           {
             "name": "start_time_utc",
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "type": "string",
+              "format": "date-time",
               "title": "Start time",
               "description": "Start time from when the data will be returned. Format: yyyy-MM-ddThh:mm:ss"
             },
@@ -858,43 +632,63 @@
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "type": "string",
+              "format": "date-time",
               "title": "End time",
-              "description": "End time from when the data will be returned"
+              "description": "End time from when the data will be returned. Format: yyyy-MM-ddThh:mm:ss"
             },
-            "description": "End time from when the data will be returned"
-          },
-          {
-            "name": "accept",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/ContentTypeEnum"
+            "description": "End time from when the data will be returned. Format: yyyy-MM-ddThh:mm:ss"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success_List_Point__"
                 }
-              ],
-              "default": "application/json",
-              "title": "Accept"
+              }
             }
           },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/position/trip/{trip_id}": {
+      "get": {
+        "tags": [
+          "Positions"
+        ],
+        "summary": "Positions By Trip Id",
+        "description": "This endpoint returns the historical point information for a given Device between start_time_utc and end_time_utc.\nIf start_time_utc or end_time_utc are not given, return the latest 1000 positions for a device.",
+        "operationId": "positions_by_trip_id_position_trip__trip_id__get",
+        "security": [
           {
-            "name": "api-version",
-            "in": "header",
-            "required": false,
+            "JWTBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "trip_id",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
-              "default": 0.1,
-              "title": "Api-Version"
-            }
+              "format": "uuid",
+              "title": "Trip ID",
+              "description": "Trip id of the positions to be requested"
+            },
+            "description": "Trip id of the positions to be requested"
           }
         ],
         "responses": {
@@ -924,63 +718,6 @@
   },
   "components": {
     "schemas": {
-      "Body_login_token_post": {
-        "properties": {
-          "grant_type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "password"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Grant Type"
-          },
-          "username": {
-            "type": "string",
-            "title": "Username"
-          },
-          "password": {
-            "type": "string",
-            "title": "Password"
-          },
-          "scope": {
-            "type": "string",
-            "title": "Scope",
-            "default": ""
-          },
-          "client_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Client Id"
-          },
-          "client_secret": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Client Secret"
-          }
-        },
-        "type": "object",
-        "required": [
-          "username",
-          "password"
-        ],
-        "title": "Body_login_token_post"
-      },
       "Connection": {
         "properties": {
           "integration_name": {
@@ -1051,14 +788,6 @@
           "tenant_id"
         ],
         "title": "Connection"
-      },
-      "ContentTypeEnum": {
-        "type": "string",
-        "enum": [
-          "application/json",
-          "application/bson"
-        ],
-        "title": "ContentTypeEnum"
       },
       "Device": {
         "properties": {
@@ -1308,6 +1037,26 @@
           "radius"
         ],
         "title": "ProviderEnum"
+      },
+      "RefreshToken": {
+        "properties": {
+          "sub": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Sub",
+            "description": "The username (not email) of the client. Can be found in the `sub` parameter in the payload section of the JWT access token."
+          },
+          "refresh_token": {
+            "type": "string",
+            "title": "Refresh Token"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sub",
+          "refresh_token"
+        ],
+        "title": "RefreshToken"
       },
       "Success_Connection_": {
         "properties": {
@@ -1635,6 +1384,25 @@
         ],
         "title": "Trip"
       },
+      "UsernamePassword": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username",
+            "description": "The username / email of the user"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "UsernamePassword"
+      },
       "ValidationError": {
         "properties": {
           "loc": {
@@ -1670,6 +1438,10 @@
       }
     },
     "securitySchemes": {
+      "JWTBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      },
       "OAuth2PasswordBearer": {
         "type": "http",
         "scheme": "bearer"
